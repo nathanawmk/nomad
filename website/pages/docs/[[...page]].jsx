@@ -18,17 +18,23 @@ export default function DocsLayout(props) {
       baseRoute={basePath}
       staticProps={props}
       additionalComponents={additionalComponents}
+      showVersionSelect={true}
     />
   )
 }
 
 export async function getStaticPaths() {
+  const paths = await generateStaticPaths({
+    navDataFile: NAV_DATA_FILE,
+    localContentDir: CONTENT_DIR,
+    // new ----
+    product: { name: productName, slug: productSlug },
+    basePath,
+  })
+
   return {
-    fallback: false,
-    paths: await generateStaticPaths({
-      navDataFile: NAV_DATA_FILE,
-      localContentDir: CONTENT_DIR,
-    }),
+    fallback: 'blocking',
+    paths: paths,
   }
 }
 
