@@ -72,6 +72,7 @@ func diffSystemAllocsForNode(
 ) *diffResult {
 	result := new(diffResult)
 
+	fmt.Println("#### ELIBIGLE NODES ", eligibleNodes)
 	// Scan the existing updates
 	existing := make(map[string]struct{}) // set of alloc names
 	for _, exist := range allocs {
@@ -140,7 +141,12 @@ func diffSystemAllocsForNode(
 		// For an existing allocation, if the nodeID is no longer
 		// eligible, the diff should be ignored
 		if _, ok := eligibleNodes[nodeID]; !ok {
-			goto IGNORE
+			result.stop = append(result.ignore, allocTuple{
+				Name:      name,
+				TaskGroup: tg,
+				Alloc:     exist,
+			})
+			continue
 		}
 
 		// If the definition is updated we need to update
@@ -238,8 +244,7 @@ func diffSystemAllocs(
 	// Build a mapping of nodes to all their allocs.
 	nodeAllocs := make(map[string][]*structs.Allocation, len(allocs))
 	for _, alloc := range allocs {
-		nallocs := append(nodeAllocs[alloc.NodeID], alloc) //nolint:gocritic
-		nodeAllocs[alloc.NodeID] = nallocs
+		nodeAllocs[alloc.NodeID] = append(nodeAllocs[alloc.NodeID], alloc)
 	}
 
 	eligibleNodes := make(map[string]*structs.Node)

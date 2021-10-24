@@ -6,6 +6,8 @@ data_dir = "/tmp/nomad-dev-cluster/client2"
 
 # Give the agent a unique name. Defaults to hostname
 name = "client2"
+datacenter = "dc2"
+
 
 # Enable debugging
 enable_debug = true
