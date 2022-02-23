@@ -3,8 +3,9 @@ resource "aws_efs_file_system" "csi" {
   creation_token = "${local.random_name}-CSI"
 
   tags = {
-    Name = "${local.random_name}-efs"
-    User = data.aws_caller_identity.current.arn
+    Name      = "${local.random_name}-efs"
+    User      = data.aws_caller_identity.current.arn
+    yor_trace = "58d8aa25-eeda-4e9c-89df-81c82e0267aa"
   }
 }
 

@@ -17,6 +17,7 @@ resource "aws_instance" "server" {
     ConsulAutoJoin = "auto-join-${local.random_name}"
     SHA            = var.nomad_sha
     User           = data.aws_caller_identity.current.arn
+    yor_trace      = "b31e7e6d-4eba-430f-a70c-dd57f0db28bd"
   }
 }
 
@@ -35,6 +36,7 @@ resource "aws_instance" "client_ubuntu_bionic_amd64" {
     ConsulAutoJoin = "auto-join-${local.random_name}"
     SHA            = var.nomad_sha
     User           = data.aws_caller_identity.current.arn
+    yor_trace      = "4f72bc57-20f5-4de8-a1ca-975c2401c210"
   }
 }
 
@@ -55,6 +57,7 @@ resource "aws_instance" "client_windows_2016_amd64" {
     ConsulAutoJoin = "auto-join-${local.random_name}"
     SHA            = var.nomad_sha
     User           = data.aws_caller_identity.current.arn
+    yor_trace      = "e7843989-e8d3-4bff-8ec3-752d03f32668"
   }
 }
 

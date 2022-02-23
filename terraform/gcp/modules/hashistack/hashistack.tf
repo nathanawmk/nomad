@@ -201,7 +201,7 @@ resource "google_compute_instance" "server" {
   scheduling {
     preemptible = var.enable_preemptible
     # scheduling must have automatic_restart be false when preemptible is true.
-    automatic_restart = ! var.enable_preemptible
+    automatic_restart = !var.enable_preemptible
   }
 
   service_account {
@@ -216,6 +216,9 @@ resource "google_compute_instance" "server" {
   }
 
   metadata_startup_script = local.server_metadata_startup_script
+  labels = {
+    yor_trace = "b747575f-7277-410a-bdd4-324788723bb3"
+  }
 }
 
 resource "google_compute_instance" "client" {
@@ -245,7 +248,7 @@ resource "google_compute_instance" "client" {
   scheduling {
     preemptible = var.enable_preemptible
     # scheduling must have automatic_restart be false when preemptible is true.
-    automatic_restart = ! var.enable_preemptible
+    automatic_restart = !var.enable_preemptible
   }
 
   service_account {
@@ -260,4 +263,7 @@ resource "google_compute_instance" "client" {
   }
 
   metadata_startup_script = local.client_metadata_startup_script
+  labels = {
+    yor_trace = "da6e1b71-7f90-4cc0-826d-edd22b604386"
+  }
 }

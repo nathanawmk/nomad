@@ -71,6 +71,9 @@ resource "aws_security_group" "primary" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    yor_trace = "ab4c373c-723f-4c96-a6b9-eba77ebcc3d4"
+  }
 }
 
 resource "aws_security_group" "nfs" {
@@ -83,5 +86,8 @@ resource "aws_security_group" "nfs" {
     to_port         = 2049
     protocol        = "tcp"
     security_groups = [aws_security_group.primary.id]
+  }
+  tags = {
+    yor_trace = "3ad1f96f-28f7-4d13-abf8-b89c8dfa4cac"
   }
 }

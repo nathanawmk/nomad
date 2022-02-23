@@ -71,6 +71,9 @@ resource "aws_security_group" "server_lb" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    yor_trace = "54a62729-550d-4b47-a9b9-2f5ae0745f09"
+  }
 }
 
 resource "aws_security_group" "primary" {
@@ -155,6 +158,9 @@ resource "aws_security_group" "primary" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    yor_trace = "004e88cf-c3c0-43c7-b802-a59b70219483"
+  }
 }
 
 data "template_file" "user_data_server" {
@@ -203,7 +209,9 @@ resource "aws_instance" "server" {
     {
       "${var.retry_join.tag_key}" = "${var.retry_join.tag_value}"
     },
-  )
+    {
+      yor_trace = "4be63a04-dbe1-4fa6-81b2-9d6c302f2572"
+  })
 
   root_block_device {
     volume_type           = "gp2"
@@ -231,7 +239,9 @@ resource "aws_instance" "client" {
     {
       "${var.retry_join.tag_key}" = "${var.retry_join.tag_value}"
     },
-  )
+    {
+      yor_trace = "cf4b8c40-5be9-4580-8334-5140ce5dc7f6"
+  })
 
   root_block_device {
     volume_type           = "gp2"
@@ -253,11 +263,17 @@ resource "aws_instance" "client" {
 resource "aws_iam_instance_profile" "instance_profile" {
   name_prefix = var.name
   role        = aws_iam_role.instance_role.name
+  tags = {
+    yor_trace = "09d00809-685d-4228-b3d1-49acdae129b4"
+  }
 }
 
 resource "aws_iam_role" "instance_role" {
   name_prefix        = var.name
   assume_role_policy = data.aws_iam_policy_document.instance_role.json
+  tags = {
+    yor_trace = "8de589d7-907b-4704-9381-f9c2560e2c00"
+  }
 }
 
 data "aws_iam_policy_document" "instance_role" {
@@ -310,6 +326,9 @@ resource "aws_elb" "server_lb" {
     lb_protocol       = "http"
   }
   security_groups = [aws_security_group.server_lb.id]
+  tags = {
+    yor_trace = "0ed66bfe-5f34-4d14-a324-625b6fb98cbd"
+  }
 }
 
 output "server_public_ips" {
