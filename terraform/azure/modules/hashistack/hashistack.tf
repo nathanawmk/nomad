@@ -22,6 +22,9 @@ resource "null_resource" "main" {
 resource "azurerm_resource_group" "hashistack" {
   name     = "hashistack"
   location = "${var.location}"
+  tags = {
+    yor_trace = "1861b579-c311-4c4a-af69-d719ba4c5d98"
+  }
 }
 
 resource "azurerm_virtual_network" "hashistack-vn" {
@@ -29,6 +32,9 @@ resource "azurerm_virtual_network" "hashistack-vn" {
   address_space       = ["10.0.0.0/16"]
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.hashistack.name}"
+  tags = {
+    yor_trace = "ee08b365-1114-4264-9dcb-7af8bd06cdb0"
+  }
 }
 
 resource "azurerm_subnet" "hashistack-sn" {
@@ -42,6 +48,9 @@ resource "azurerm_network_security_group" "hashistack-sg" {
   name                = "hashistack-sg"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.hashistack.name}"
+  tags = {
+    yor_trace = "940513e5-078d-4c8a-b76a-5ad42b46abf7"
+  }
 }
 
 resource "azurerm_network_security_rule" "hashistack-sgr-22" {
@@ -98,6 +107,9 @@ resource "azurerm_public_ip" "hashistack-server-public-ip" {
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.hashistack.name}"
   public_ip_address_allocation = "static"
+  tags = {
+    yor_trace = "f4464ce6-3015-46cf-8dd5-79868cf72b6d"
+  }
 }
 
 resource "azurerm_network_interface" "hashistack-server-ni" {
@@ -116,6 +128,9 @@ resource "azurerm_network_interface" "hashistack-server-ni" {
 
   tags {
     ConsulAutoJoin = "auto-join"
+  }
+  tags = {
+    yor_trace = "2a315daa-b3ce-4a27-a11a-dc3df0ec33d5"
   }
 }
 
@@ -159,6 +174,9 @@ resource "azurerm_virtual_machine" "server" {
       key_data = "${tls_private_key.main.public_key_openssh}"
     }
   }
+  tags = {
+    yor_trace = "fc1c6b5f-c8a6-4916-9744-f062eeb2763a"
+  }
 }
 
 data "template_file" "user_data_server" {
@@ -176,6 +194,9 @@ resource "azurerm_public_ip" "hashistack-client-public-ip" {
   location                     = "${var.location}"
   resource_group_name          = "${azurerm_resource_group.hashistack.name}"
   public_ip_address_allocation = "static"
+  tags = {
+    yor_trace = "e02fd642-82c8-4a31-9d39-15c634e4ba5d"
+  }
 }
 
 resource "azurerm_network_interface" "hashistack-client-ni" {
@@ -194,6 +215,9 @@ resource "azurerm_network_interface" "hashistack-client-ni" {
 
   tags {
     ConsulAutoJoin = "auto-join"
+  }
+  tags = {
+    yor_trace = "ab2c7e4b-130b-47a6-a2a0-e89e004bb1ac"
   }
 }
 
@@ -237,6 +261,9 @@ resource "azurerm_virtual_machine" "client" {
       path     = "/home/ubuntu/.ssh/authorized_keys"
       key_data = "${tls_private_key.main.public_key_openssh}"
     }
+  }
+  tags = {
+    yor_trace = "377e3e29-d6d8-4e38-9093-6160c6803a32"
   }
 }
 
